@@ -14,7 +14,8 @@
    <string>Calculador Jugadores</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="accessories-calculator"/>
+   <iconset theme="accessories-calculator">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -354,7 +355,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -1947,6 +1948,19 @@
       <string>Buscar</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QProgressBar" name="progressBar">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>540</y>
+      <width>341</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
