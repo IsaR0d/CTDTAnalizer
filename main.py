@@ -1,16 +1,45 @@
 import sys
 from PyQt6.QtWidgets import *
 from PyQt6.uic import *
+from PyQt6.QtCore import QThread, pyqtSignal
+
+class HiloPrueba(QThread):
+    result = pyqtSignal(dict)
+    progress = pyqtSignal(int)
+    def __init__(self):
+        super().__init__()
+    
+    #comienza a correr el hilo
+    def run(self):
+        result = analizar_jugador(self.progress)
+        self.result.emit(result)
+
+
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         loadUi('analisis.ui', self)
         self.show()
+        self.calcular_btn.clicked.connect(self.prueba)
         self.calcular_btn.clicked.connect(self.calcular)
-    
-    def calcular(self):
 
+    def prueba(self):
+        self.hilo = HiloPrueba()
+        self.hilo.result.connect(self.onTaskFinished)
+        self.hilo.start()
+
+
+    def onTaskFinished(self, result):
+        print(result)
+        print('Task finished')
+        
+
+
+    def calcular(self):
+        
+        
         diccionario_jugador = {
             'regate_stat' : self.reg_st.value(),
             'remate_stat' : self.rem_st.value(),
@@ -48,6 +77,10 @@ class MainWindow(QMainWindow):
             'col_sel' : self.col_sel.currentText(),
             'bb4_cb' : self.bb4_cb.isChecked(),
         }
+
+        print(diccionario_jugador)
+    def update_progressbar(self, new_value):
+        self.progressbar.setValue(new_value)
 
 
 
