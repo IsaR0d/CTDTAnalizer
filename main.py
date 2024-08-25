@@ -2,88 +2,50 @@ import sys
 from PyQt6.QtWidgets import *
 from PyQt6.uic import *
 from PyQt6.QtCore import QThread, pyqtSignal
+from controler import analizar_jugador
+import math
 
-class HiloPrueba(QThread):
+class HiloAnalisis(QThread):
     result = pyqtSignal(dict)
     progress = pyqtSignal(int)
-    def __init__(self):
+    def __init__(self, diccionario_jugador):
         super().__init__()
+        self.diccionario_jugador = diccionario_jugador
     
     #comienza a correr el hilo
     def run(self):
-        result = analizar_jugador(self.progress)
+        print(self.diccionario_jugador)
+        result = analizar_jugador(self.progress, self.diccionario_jugador)
         self.result.emit(result)
-
-
-
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         loadUi('analisis.ui', self)
         self.show()
-        self.calcular_btn.clicked.connect(self.prueba)
+        self.resultado_analisis = None
         self.calcular_btn.clicked.connect(self.calcular)
 
-    def prueba(self):
-        self.hilo = HiloPrueba()
+    def onTaskFinished(self, result):
+        self.resultado_analisis = result
+        print(result)
+
+    def onProgress(self, progress):
+        self.progressBar.setValue(progress)
+
+    def calcular(self):   
+        stats ={'regate': self.reg_st.value(), 'remate': self.rem_st.value(), 'pase': self.pas_st.value(), 'entrada': self.ent_st.value(), 'bloqueo': self.blo_st.value(), 'interceptacion': self.int_st.value(), 'rapidez': self.rap_st.value(), 'potencia': self.pot_st.value(), 'tecnica': self.tec_st.value()}
+        tecnicas = {'regate': self.reg_tc.value(), 'remate': self.rem_tc.value(), 'pase': self.pas_tc.value(), 'entrada': self.ent_tc.value(), 'bloqueo': self.blo_tc.value(), 'interceptacion': self.int_tc.value(), 'bajo': self.baj_tc.value(), 'alto': self.alt_tc.value()}
+        extras = {'regate': 1+self.reg_ex.value()/100, 'remate': 1+self.rem_ex.value()/100, 'pase': 1+self.pas_ex.value()/100, 'entrada': 1+self.ent_ex.value()/100, 'bloqueo': 1+self.blo_ex.value()/100, 'interceptacion': 1+self.int_ex.value()/100}
+        otros = {'ts': 1+self.ts.value()/100, 'bond': 1+self.bond.value()/100, 'parametros': self.parametros.value(), 'potencia': self.potencia.value(), 'cabeceo': self.cab_sel.currentText(), 'volea': self.vol_sel.currentText(), 'formacion': self.for_sel.currentText(), 'lb': self.lb_sel.currentText(), 'color': self.col_sel.currentText(), 'bb4': self.bb4_cb.isChecked()}
+        diccionario_jugador = {'stats': stats, 'tecnicas': tecnicas, 'extras': extras, 'otros': otros}
+        print(diccionario_jugador)
+
+        # Crear el hilo y pasar el diccionario como argumento
+        self.hilo = HiloAnalisis(diccionario_jugador)
+        self.hilo.progress.connect(self.onProgress)
         self.hilo.result.connect(self.onTaskFinished)
         self.hilo.start()
-
-
-    def onTaskFinished(self, result):
-        print(result)
-        print('Task finished')
-        
-
-
-    def calcular(self):
-        
-        
-        diccionario_jugador = {
-            'regate_stat' : self.reg_st.value(),
-            'remate_stat' : self.rem_st.value(),
-            'pase_stat' : self.pas_st.value(),
-            'entrada_stat' : self.ent_st.value(),
-            'bloqueo_stat' : self.blo_st.value(),
-            'interceptacion_stat' : self.int_st.value(),
-            'rapidez_stat' : self.rap_st.value(),
-            'potencia_stat' : self.pot_st.value(),
-            'tecnica_stat' : self.tec_st.value(),
-            'regate_tec' : self.reg_tc.value(),
-            'remate_tec' : self.rem_tc.value(),
-            'pase_tec' : self.pas_tc.value(),
-            'entrada_tec' : self.ent_tc.value(),
-            'bloqueo_tec' : self.blo_tc.value(),
-            'interceptacion_tec' : self.int_tc.value(),
-            'bajo_tec' : self.baj_tc.value(),
-            'alto_tec' : self.alt_tc.value(),
-            'regate_ex' : self.reg_ex.value(),
-            'remate_ex' : self.rem_ex.value(),
-            'pase_ex' : self.pas_ex.value(),
-            'entrada_ex' : self.ent_ex.value(),
-            'bloqueo_ex' : self.blo_ex.value(),
-            'interceptacion_ex' : self.int_ex.value(),
-            'bajo_ex' : self.baj_ex.value(),
-            'alto_ex' : self.alt_ex.value(),
-            'ts' : self.ts.value(),
-            'bond' : self.bond.value(),
-            'parametros' : self.parametros.value(),
-            'potencia' : self.potencia.value(),
-            'cab_sel' : self.cab_sel.currentText(),
-            'vol_sel' : self.vol_sel.currentText(),
-            'for_sel' : self.for_sel.currentText(),
-            'lb_sel' : self.lb_sel.currentText(),
-            'col_sel' : self.col_sel.currentText(),
-            'bb4_cb' : self.bb4_cb.isChecked(),
-        }
-
-        print(diccionario_jugador)
-    def update_progressbar(self, new_value):
-        self.progressbar.setValue(new_value)
-
-
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
