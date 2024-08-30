@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>811</width>
-    <height>618</height>
+    <height>652</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,10 +27,10 @@
    <widget class="QLabel" name="jug_img">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>50</y>
-      <width>221</width>
-      <height>221</height>
+      <x>480</x>
+      <y>100</y>
+      <width>161</width>
+      <height>161</height>
      </rect>
     </property>
     <property name="text">
@@ -684,7 +684,7 @@
    <widget class="QGroupBox" name="groupBox_3">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>260</x>
       <y>10</y>
       <width>131</width>
       <height>291</height>
@@ -958,14 +958,14 @@
    <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>390</x>
       <y>10</y>
       <width>81</width>
       <height>291</height>
      </rect>
     </property>
     <property name="title">
-     <string>Extra</string>
+     <string>Extra Tec</string>
     </property>
     <widget class="QSpinBox" name="rem_ex">
      <property name="geometry">
@@ -1233,7 +1233,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>310</y>
+      <y>330</y>
       <width>121</width>
       <height>91</height>
      </rect>
@@ -1307,7 +1307,7 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>310</y>
+      <y>330</y>
       <width>111</width>
       <height>51</height>
      </rect>
@@ -1333,7 +1333,7 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>410</y>
+      <y>430</y>
       <width>111</width>
       <height>51</height>
      </rect>
@@ -1371,7 +1371,7 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>360</y>
+      <y>380</y>
       <width>111</width>
       <height>51</height>
      </rect>
@@ -1409,7 +1409,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>400</y>
+      <y>420</y>
       <width>121</width>
       <height>61</height>
      </rect>
@@ -1457,7 +1457,7 @@
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>310</y>
+      <y>330</y>
       <width>121</width>
       <height>101</height>
      </rect>
@@ -1534,13 +1534,13 @@
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>410</y>
+      <y>430</y>
       <width>121</width>
       <height>51</height>
      </rect>
     </property>
     <property name="title">
-     <string>Parametros +</string>
+     <string>Stat up +</string>
     </property>
     <widget class="QLabel" name="label_75">
      <property name="geometry">
@@ -1573,7 +1573,7 @@
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>460</y>
+      <y>480</y>
       <width>121</width>
       <height>51</height>
      </rect>
@@ -1612,7 +1612,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>470</y>
+      <y>490</y>
       <width>241</width>
       <height>41</height>
      </rect>
@@ -1625,7 +1625,7 @@
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>390</y>
+      <y>440</y>
       <width>301</width>
       <height>121</height>
      </rect>
@@ -1741,7 +1741,7 @@
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>280</y>
+      <y>330</y>
       <width>391</width>
       <height>111</height>
      </rect>
@@ -1880,7 +1880,7 @@
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>530</y>
+      <y>550</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -1893,7 +1893,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>520</y>
+      <y>540</y>
       <width>231</width>
       <height>51</height>
      </rect>
@@ -1954,6 +1954,412 @@
      <number>0</number>
     </property>
    </widget>
+   <widget class="QGroupBox" name="groupBox_16">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>10</y>
+      <width>81</width>
+      <height>291</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Extra Stat</string>
+    </property>
+    <widget class="QSpinBox" name="rem_ex_stat">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>41</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="pot_ex_stat">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>230</y>
+       <width>41</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="ent_ex_stat">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>41</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="int_ex_stat">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>41</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="rap_ex_stat">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>200</y>
+       <width>41</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="reg_ex_stat">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>41</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="pas_ex_stat">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>41</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="blo_ex_stat">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>140</y>
+       <width>41</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_78">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>20</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_79">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>50</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_80">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>80</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_81">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>110</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_82">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>140</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_83">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>170</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_84">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>200</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_85">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>230</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="tec_ex_stat">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>260</y>
+       <width>41</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_86">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>260</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_17">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>300</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLabel" name="label_40">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Extra Stat (Todas)</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="ex_stat">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>0</y>
+       <width>41</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_87">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>0</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_18">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>300</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLabel" name="label_42">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Extra Tec (Todas)</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="ex_tec">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>0</y>
+       <width>41</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_89">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>0</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+   </widget>
+   <zorder>groupBox_17</zorder>
+   <zorder>jug_img</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>groupBox_2</zorder>
+   <zorder>groupBox_3</zorder>
+   <zorder>groupBox_4</zorder>
+   <zorder>groupBox_5</zorder>
+   <zorder>groupBox_6</zorder>
+   <zorder>groupBox_7</zorder>
+   <zorder>groupBox_8</zorder>
+   <zorder>groupBox_9</zorder>
+   <zorder>groupBox_10</zorder>
+   <zorder>groupBox_11</zorder>
+   <zorder>groupBox_12</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>groupBox_13</zorder>
+   <zorder>groupBox_14</zorder>
+   <zorder>calcular_btn</zorder>
+   <zorder>groupBox_15</zorder>
+   <zorder>progressBar</zorder>
+   <zorder>groupBox_16</zorder>
+   <zorder>groupBox_18</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
