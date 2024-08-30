@@ -413,7 +413,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="cab_total_2">
+       <widget class="QLabel" name="balto_total">
         <property name="text">
          <string>0</string>
         </property>
@@ -477,7 +477,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="vol_total_2">
+       <widget class="QLabel" name="bbajo_total">
         <property name="text">
          <string>0</string>
         </property>
@@ -857,7 +857,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>B. Alto</string>
+      <string>Cabez.</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_56">
@@ -922,7 +922,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>B. Bajo</string>
+      <string>Volea</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_69">
@@ -1944,8 +1944,8 @@
    <widget class="QProgressBar" name="progressBar">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>540</y>
+      <x>430</x>
+      <y>580</y>
       <width>341</width>
       <height>21</height>
      </rect>
