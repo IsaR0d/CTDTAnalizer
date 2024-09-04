@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 
 # Abre el archivo HTML
 def extractor(archivo):
-    with open(archivo) as file:
+    with open(archivo, "r", encoding="utf-8") as file:
         contenido = file.read()
 
     diccionario = {}
@@ -27,6 +27,7 @@ def extractor(archivo):
         
 
     diccionario = {"stats": stats, "tecnicas": tecnicas}
+    print(diccionario)
     return diccionario
 
     

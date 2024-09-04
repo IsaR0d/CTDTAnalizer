@@ -1,8 +1,10 @@
 import sys
 from PyQt6.QtWidgets import *
 from PyQt6.uic import loadUi
-from PyQt6.QtCore import QThread, pyqtSignal
-from analizer import analizar_jugador
+
+from PyQt6.QtCore import QThread, pyqtSignal, QStandardPaths
+from analyzer import analizar_jugador
+from dataExtractor import extractor
 import math
 
 class HiloAnalisis(QThread):
@@ -12,6 +14,7 @@ class HiloAnalisis(QThread):
     def __init__(self, diccionario_jugador):
         super().__init__()
         self.diccionario_jugador = diccionario_jugador
+        self.player = None
 
     def run(self):
         result = analizar_jugador(self.progress, self.diccionario_jugador)
@@ -24,6 +27,7 @@ class MainWindow(QMainWindow):
         self.show()
         self.resultado_analisis = None
         self.calcular_btn.clicked.connect(self.calcular)
+        self.subir_btn.clicked.connect(self.subirJugador)
 
     def onTaskFinished(self, result):
         for key in ['remate', 'pase', 'regate', 'entrada', 'bloqueo', 'intercepcion']:
@@ -37,6 +41,37 @@ class MainWindow(QMainWindow):
 
     def onProgress(self, progress):
         self.progressBar.setValue(progress)
+
+    def subirJugador(self):
+        options = (QFileDialog.Option.DontUseNativeDialog)
+        initial_dir = QStandardPaths.writableLocation(
+            QStandardPaths.StandardLocation.DownloadLocation
+        )
+        file_types = "Archivos HTML (*.html)"
+        file_name, _ = QFileDialog.getOpenFileName(self, "Open File", initial_dir, file_types, options=options)
+        self.player = extractor(file_name)
+        self.actualizar_ui()
+
+    def actualizar_ui(self):
+        self.reg_st.setValue(self.player['stats']['regate'])
+        self.rem_st.setValue(self.player['stats']['remate'])
+        self.pas_st.setValue(self.player['stats']['pase'])
+        self.ent_st.setValue(self.player['stats']['entrada'])
+        self.blo_st.setValue(self.player['stats']['bloqueo'])
+        self.int_st.setValue(self.player['stats']['intercepcion'])
+        self.rap_st.setValue(self.player['stats']['rapidez'])
+        self.pot_st.setValue(self.player['stats']['potencia'])
+        self.tec_st.setValue(self.player['stats']['tecnica'])
+        self.reg_tc.setValue(self.player['tecnicas']['regate'])
+        self.rem_tc.setValue(self.player['tecnicas']['remate'])
+        self.pas_tc.setValue(self.player['tecnicas']['pase'])
+        self.ent_tc.setValue(self.player['tecnicas']['entrada'])
+        self.blo_tc.setValue(self.player['tecnicas']['bloqueo'])
+        self.int_tc.setValue(self.player['tecnicas']['intercepcion'])
+        self.baj_tc.setValue(self.player['tecnicas']['bajo'])
+        self.alt_tc.setValue(self.player['tecnicas']['alto'])
+
+
 
     def calcular(self):   
         stats = {

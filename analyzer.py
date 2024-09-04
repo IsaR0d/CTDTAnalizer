@@ -36,13 +36,26 @@ def calcular_fuerza_tecnicas(diccionario_jugador):
     
     for tecnica, valor in diccionario_jugador['tecnicas'].items():
         multiplicador_balones_aire = 0
-        if tecnica in ['alto', 'bajo']:
-            if otros['cabeceo'] in ['Muy Bueno', 'Bueno'] or otros['volea'] in ['Muy Bueno', 'Bueno']:
-                multiplicador_balones_aire = 0.25 if otros['cabeceo'] == 'Muy Bueno' or otros['volea'] == 'Muy Bueno' else 0.125
-            
+        # if tecnica in ['alto', 'bajo']:
+        #     if otros['cabeceo'] in ['Muy Bueno'] or otros['volea'] in ['Muy Bueno']:
+        #         multiplicador_balones_aire = 25 
+        #     elif otros['cabeceo'] == 'Bueno' or otros['volea'] == 'Bueno':
+        #         multiplicador_balones_aire = 12.5
+        if tecnica == 'alto':
+            if otros['cabeceo'] in ['Muy Bueno']:
+                multiplicador_balones_aire = 25 
+            elif otros['cabeceo'] == 'Bueno':
+                multiplicador_balones_aire = 12.5
+        if tecnica == 'bajo':
+            if otros['volea'] in ['Muy Bueno']:
+                multiplicador_balones_aire = 25 
+            elif otros['volea'] == 'Bueno':
+                multiplicador_balones_aire = 12.5
+
+        print(valor + multiplicador_balones_aire)
         tecnicas_final[tecnica] = ((valor + multiplicador_balones_aire) *
                                    (potencia_base + diccionario_jugador['extras'][tecnica] - 1))
-
+    print(tecnicas_final)
     tecnicas_final['bloqueoBajo'] = tecnicas_final['bloqueo']
     tecnicas_final['bloqueoAlto'] = tecnicas_final['bloqueo']
 
