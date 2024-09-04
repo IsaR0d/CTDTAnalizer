@@ -2,7 +2,7 @@ import sys
 from PyQt6.QtWidgets import *
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import QThread, pyqtSignal
-from controler import analizar_jugador
+from analizer import analizar_jugador
 import math
 
 class HiloAnalisis(QThread):
