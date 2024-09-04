@@ -9,7 +9,6 @@ import math
 
 class HiloAnalisis(QThread):
     result = pyqtSignal(dict)
-    progress = pyqtSignal(int)
 
     def __init__(self, diccionario_jugador):
         super().__init__()
@@ -17,7 +16,7 @@ class HiloAnalisis(QThread):
         self.player = None
 
     def run(self):
-        result = analizar_jugador(self.progress, self.diccionario_jugador)
+        result = analizar_jugador(self.diccionario_jugador)
         self.result.emit(result)
 
 class MainWindow(QMainWindow):
@@ -33,14 +32,14 @@ class MainWindow(QMainWindow):
         for key in ['remate', 'pase', 'regate', 'entrada', 'bloqueo', 'intercepcion']:
             getattr(self, f"{key[:3]}_visual").setText(str(math.ceil(result['statsVisuales'][key])))
             getattr(self, f"{key[:3]}_total").setText(str(math.ceil(result['statsDuelo'][key])))
+        getattr(self, "par_visual").setText(str(math.ceil(result['statsVisuales']['pase'])))    
+        getattr(self, "par_total").setText(str(math.ceil(result['statsDuelo']['pared'])))    
 
         self.cab_total.setText(str(math.ceil(result['statsDuelo']['cabeceo'])))
         self.vol_total.setText(str(math.ceil(result['statsDuelo']['volea'])))
         self.balto_total.setText(str(math.ceil(result['statsDuelo']['bloqueoAlto'])))
         self.bbajo_total.setText(str(math.ceil(result['statsDuelo']['bloqueoBajo'])))
 
-    def onProgress(self, progress):
-        self.progressBar.setValue(progress)
 
     def subirJugador(self):
         options = (QFileDialog.Option.DontUseNativeDialog)
@@ -49,8 +48,9 @@ class MainWindow(QMainWindow):
         )
         file_types = "Archivos HTML (*.html)"
         file_name, _ = QFileDialog.getOpenFileName(self, "Open File", initial_dir, file_types, options=options)
-        self.player = extractor(file_name)
-        self.actualizar_ui()
+        if file_name:
+            self.player = extractor(file_name)
+            self.actualizar_ui()
 
     def actualizar_ui(self):
         self.reg_st.setValue(self.player['stats']['regate'])
@@ -65,6 +65,7 @@ class MainWindow(QMainWindow):
         self.reg_tc.setValue(self.player['tecnicas']['regate'])
         self.rem_tc.setValue(self.player['tecnicas']['remate'])
         self.pas_tc.setValue(self.player['tecnicas']['pase'])
+        self.par_tc.setValue(self.player['tecnicas']['pared'])
         self.ent_tc.setValue(self.player['tecnicas']['entrada'])
         self.blo_tc.setValue(self.player['tecnicas']['bloqueo'])
         self.int_tc.setValue(self.player['tecnicas']['intercepcion'])
@@ -90,6 +91,7 @@ class MainWindow(QMainWindow):
             'regate': self.reg_tc.value(), 
             'remate': self.rem_tc.value(), 
             'pase': self.pas_tc.value(), 
+            'pared': self.par_tc.value(),
             'entrada': self.ent_tc.value(), 
             'bloqueo': self.blo_tc.value(), 
             'intercepcion': self.int_tc.value(), 
@@ -137,7 +139,6 @@ class MainWindow(QMainWindow):
 
         # Crear el hilo y pasar el diccionario como argumento
         self.hilo = HiloAnalisis(diccionario_jugador)
-        self.hilo.progress.connect(self.onProgress)
         self.hilo.result.connect(self.onTaskFinished)
         self.hilo.start()
 

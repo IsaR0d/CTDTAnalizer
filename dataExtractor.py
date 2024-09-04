@@ -6,8 +6,8 @@ def extractor(archivo):
         contenido = file.read()
 
     diccionario = {}
-    stats = {"regate": "1" , "remate": "2", "pase": "3", "entrada": "5", "bloqueo": "6", "intercepcion": "7", "rapidez": "9", "potencia": "10", "tecnica": "11"}
-    tecnicas = {"regate": "3", "remate": "4", "pase": "5", "entrada": "7", "bloqueo": "8", "intercepcion": "9", "bajo": "10", "alto": "11" }
+    stats = {"regate": "1" , "remate": "2", "pase": "3" , "entrada": "5", "bloqueo": "6", "intercepcion": "7", "rapidez": "9", "potencia": "10", "tecnica": "11"}
+    tecnicas = {"regate": "3", "remate": "4", "pase": "5", "pared":"6", "entrada": "7", "bloqueo": "8", "intercepcion": "9", "bajo": "10", "alto": "11" }
     soup = BeautifulSoup(contenido, 'html.parser')
 
     for stat in stats:
@@ -27,7 +27,6 @@ def extractor(archivo):
         
 
     diccionario = {"stats": stats, "tecnicas": tecnicas}
-    print(diccionario)
     return diccionario
 
     

@@ -4,6 +4,11 @@ def aplicar_modificaciones(diccionario_jugador, aumento_base, stats_a_modificar)
     for stat in stats_a_modificar:
         diccionario_jugador['stats'][stat] += aumento_base
 
+def aplicar_modificaciones_porcentaje(diccionario_jugador, porcentaje, stats_a_modificar):
+    for stat in stats_a_modificar:
+        diccionario_jugador['stats'][stat] = diccionario_jugador['stats'][stat] * porcentaje
+
+
 def modificar_por_lb(diccionario_jugador):
     stats_base = ['potencia', 'tecnica', 'rapidez']
     aplicar_modificaciones(diccionario_jugador, 1000, stats_base)
@@ -22,6 +27,23 @@ def modificar_por_lb(diccionario_jugador):
 
     aplicar_modificaciones(diccionario_jugador, 1000, stats_extra)
 
+def modificar_por_formacion(diccionario_jugador):
+    formacion = diccionario_jugador['otros']['formacion']
+    multiplicador = 1.10
+    if formacion == '+10% Ataque':
+        stats_base = ['regate', 'remate', 'pase']
+    elif formacion == '+10% Defensa':
+        stats_base = ['entrada', 'bloqueo', 'intercepcion']
+    elif formacion == '+10% Fisico':
+        stats_base = ['potencia', 'tecnica', 'rapidez']
+    elif formacion == '+12% Fisico':
+        stats_base = ['potencia', 'tecnica', 'rapidez']
+        multiplicador = 1.12
+    
+    aplicar_modificaciones_porcentaje(diccionario_jugador, multiplicador, stats_base)
+    
+
+
 def modificar_por_bb4(diccionario_jugador):
     stats_base = ['potencia', 'tecnica', 'rapidez']
     stats_extra = ['regate', 'remate', 'pase', 'entrada', 'bloqueo', 'intercepcion']
@@ -35,12 +57,9 @@ def calcular_fuerza_tecnicas(diccionario_jugador):
     potencia_base = otros['potencia']
     
     for tecnica, valor in diccionario_jugador['tecnicas'].items():
+        if tecnica == 'pared':
+            continue
         multiplicador_balones_aire = 0
-        # if tecnica in ['alto', 'bajo']:
-        #     if otros['cabeceo'] in ['Muy Bueno'] or otros['volea'] in ['Muy Bueno']:
-        #         multiplicador_balones_aire = 25 
-        #     elif otros['cabeceo'] == 'Bueno' or otros['volea'] == 'Bueno':
-        #         multiplicador_balones_aire = 12.5
         if tecnica == 'alto':
             if otros['cabeceo'] in ['Muy Bueno']:
                 multiplicador_balones_aire = 25 
@@ -52,22 +71,20 @@ def calcular_fuerza_tecnicas(diccionario_jugador):
             elif otros['volea'] == 'Bueno':
                 multiplicador_balones_aire = 12.5
 
-        print(valor + multiplicador_balones_aire)
         tecnicas_final[tecnica] = ((valor + multiplicador_balones_aire) *
                                    (potencia_base + diccionario_jugador['extras'][tecnica] - 1))
-    print(tecnicas_final)
+    tecnicas_final['pared'] = diccionario_jugador['tecnicas']['pared'] * (potencia_base + diccionario_jugador['extras']['pase'] - 1)
     tecnicas_final['bloqueoBajo'] = tecnicas_final['bloqueo']
     tecnicas_final['bloqueoAlto'] = tecnicas_final['bloqueo']
-
     if otros['volea'] == 'Muy Bueno':
-        tecnicas_final['bloqueoBajo'] = (diccionario_jugador['tecnicas']['bloqueo'] + 0.25) * (potencia_base + diccionario_jugador['extras']['bloqueo'] - 1)
+        tecnicas_final['bloqueoBajo'] = (diccionario_jugador['tecnicas']['bloqueo'] + 25) * (potencia_base + diccionario_jugador['extras']['bloqueo'] - 1)
     elif otros['volea'] == 'Bueno':
-        tecnicas_final['bloqueoBajo'] = (diccionario_jugador['tecnicas']['bloqueo'] + 0.125) * (potencia_base + diccionario_jugador['extras']['bloqueo'] - 1)
+        tecnicas_final['bloqueoBajo'] = (diccionario_jugador['tecnicas']['bloqueo'] + 12.5) * (potencia_base + diccionario_jugador['extras']['bloqueo'] - 1)
 
     if otros['cabeceo'] == 'Muy Bueno':
-        tecnicas_final['bloqueoAlto'] = (diccionario_jugador['tecnicas']['bloqueo'] + 0.25) * (potencia_base + diccionario_jugador['extras']['bloqueo'] - 1)
+        tecnicas_final['bloqueoAlto'] = (diccionario_jugador['tecnicas']['bloqueo'] + 25) * (potencia_base + diccionario_jugador['extras']['bloqueo'] - 1)
     elif otros['cabeceo'] == 'Bueno':
-        tecnicas_final['bloqueoAlto'] = (diccionario_jugador['tecnicas']['bloqueo'] + 0.125) * (potencia_base + diccionario_jugador['extras']['bloqueo'] - 1)
+        tecnicas_final['bloqueoAlto'] = (diccionario_jugador['tecnicas']['bloqueo'] + 12.5) * (potencia_base + diccionario_jugador['extras']['bloqueo'] - 1)
 
     return tecnicas_final
 
@@ -99,6 +116,7 @@ def calcular_stat_duelo(diccionario_jugador, multiplicador_equipo, tecnicas_fina
         'regate': calcular_duelo('regate', 'regate'),
         'remate': calcular_duelo('remate', 'remate'),
         'pase': calcular_duelo('pase', 'pase'),
+        'pared': calcular_duelo('pase', 'pared'),
         'entrada': calcular_duelo('entrada', 'entrada'),
         'bloqueo': calcular_duelo('bloqueo', 'bloqueo'),
         'intercepcion': calcular_duelo('intercepcion', 'intercepcion'),
@@ -108,11 +126,14 @@ def calcular_stat_duelo(diccionario_jugador, multiplicador_equipo, tecnicas_fina
         'bloqueoBajo': calcular_duelo('bloqueo', 'bloqueoBajo')
     }
 
-def analizar_jugador(progress, diccionario_jugador):
+def analizar_jugador(diccionario_jugador):
     # Modificación por BB4
     if diccionario_jugador['otros'].get('bb4', False):
         modificar_por_bb4(diccionario_jugador)
     
+    if diccionario_jugador['otros']['formacion'] != 'Sin Efecto':
+        modificar_por_formacion(diccionario_jugador)
+
     # Modificación por LB
     if diccionario_jugador['otros']['lb'] != 'Nada':
         modificar_por_lb(diccionario_jugador)
