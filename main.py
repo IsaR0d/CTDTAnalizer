@@ -8,6 +8,7 @@ from analyzer import analizar_jugador
 from dataExtractor import extractor, extraer_imagen
 from mhtmlConverter import converter
 import math
+import os
 
 class HiloAnalisis(QThread):
     result = pyqtSignal(dict)
@@ -24,7 +25,7 @@ class HiloAnalisis(QThread):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        loadUi('analisis.ui', self)
+        loadUi(resource_path("ui/analisis.ui"), self)
         self.show()
         self.resultado_analisis = None
 
@@ -39,49 +40,53 @@ class MainWindow(QMainWindow):
         self.tutorial.setText('<a href="https://youtu.be/9Maw63h-P84">Tutorial</a>')
         self.tutorial.setOpenExternalLinks(True)
 
-        self.q_ex_stat_todas.setToolTip("""
+
+        image_path1 = resource_path('img/ej1.jpg')
+        self.q_ex_stat_todas.setToolTip(f"""
         <table>
-        <tr><td style='text-align:justify;'padding:0; margin:0;'>
+        <tr><td style='text-align:justify;' padding:0; margin:0;'>
             <p style='margin:0; padding:0;'>Aumenta el valor de todas las <br>estadisticas a la vez en un porcentaje. Ej:</p>
         </td></tr>
-        <tr><td style='text-align:center; 'padding:0; margin:0;'>
-            <img src='img/ej1.jpg' style='margin:0; padding:0; '/>
+        <tr><td style='text-align:center;' padding:0; margin:0;'>
+            <img src='{image_path1}' style='margin:0; padding:0;'/>
         </td></tr>
         </table>
         """)
-        self.q_ex_stat_todas.setToolTipDuration(5000)
 
-        self.q_ex_stat.setToolTip("""
+        self.q_ex_stat_todas.setToolTipDuration(5000)
+        image_path2 = resource_path('img/ej2.jpg')
+        self.q_ex_stat.setToolTip(f"""
         <table>
         <tr><td style='text-align:justify;'padding:0; margin:0;'>
             <p style='margin:0; padding:0;'>Aumenta el valor de una estadisticas<br> a la vez en un porcentaje. Ej:</p>
         </td></tr>
         <tr><td style='text-align:center; 'padding:0; margin:0;'>
-            <img src='img/ej2.jpg' style='margin:0; padding:0;'/>
+            <img src='{image_path2}' style='margin:0; padding:0;'/>
         </td></tr>
         </table>
         """)
         self.q_ex_stat.setToolTipDuration(5000)
-
-        self.q_ex_tec.setToolTip("""
+        image_path3 = resource_path('img/ej3.jpg')
+        self.q_ex_tec.setToolTip(f"""
         <table>
         <tr><td style='text-align:justify;'padding:0; margin:0;'>
             <p style='margin:0; padding:0;'>Aumenta la potencia de una<br> tecnica a la vez en un porcentaje. Ej:</p>
         </td></tr>
         <tr><td style='text-align:center; 'padding:0; margin:0;'>
-            <img src='img/ej3.jpg' style='margin:0; padding:0;'/>
+            <img src='{image_path3}' style='margin:0; padding:0;'/>
         </td></tr>
         </table>
         """)
         self.q_ex_tec.setToolTipDuration(5000)
 
-        self.q_ext_tec_todas.setToolTip("""
+        image_path4 = resource_path('img/ej4.jpg')
+        self.q_ext_tec_todas.setToolTip(f"""
         <table>
         <tr><td style='text-align:justify;'padding:0; margin:0;'>
             <p style='margin:0; padding:0;'>Aumenta la potencia de todas las<br> tecnicas a la vez en un porcentaje. Ej:</p>
         </td></tr>
         <tr><td style='text-align:center; 'padding:0; margin:0;'>
-            <img src='img/ej4.jpg' style='margin:0; padding:0;'/>
+            <img src='{image_path4}' style='margin:0; padding:0;'/>
         </td></tr>
         </table>
         """)
@@ -269,6 +274,17 @@ class MainWindow(QMainWindow):
         self.hilo = HiloAnalisis(diccionario_jugador)
         self.hilo.result.connect(self.onTaskFinished)
         self.hilo.start()
+
+
+def resource_path(relative_path):
+    """ Get the absolute path to the resource, works for PyInstaller and normal execution """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
