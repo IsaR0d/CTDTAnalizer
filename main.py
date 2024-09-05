@@ -1,10 +1,10 @@
 import sys
-from PyQt6.QtWidgets import *
+from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PyQt6.uic import loadUi
 from PyQt6.QtCore import QThread, pyqtSignal, QStandardPaths, Qt
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import QByteArray
-from funcionalidades.analyzer import analizar_jugador
+from analyzer import analizar_jugador
 from dataExtractor import extractor, extraer_imagen
 from mhtmlConverter import converter
 import math
@@ -36,13 +36,13 @@ class MainWindow(QMainWindow):
 
         self.reiniciar_btn.clicked.connect(self.reiniciar)
 
-        self.tutorial.setText('<a href="https://es.stackoverflow.com/">Tutorial</a>')
+        self.tutorial.setText('<a href="https://youtu.be/9Maw63h-P84">Tutorial</a>')
         self.tutorial.setOpenExternalLinks(True)
 
         self.q_ex_stat_todas.setToolTip("""
         <table>
         <tr><td style='text-align:justify;'padding:0; margin:0;'>
-            <p style='margin:0; padding:0;'>Aumenta el valor de todas las <br>estadisticas a la vez en un porcentaje</p>
+            <p style='margin:0; padding:0;'>Aumenta el valor de todas las <br>estadisticas a la vez en un porcentaje. Ej:</p>
         </td></tr>
         <tr><td style='text-align:center; 'padding:0; margin:0;'>
             <img src='img/ej1.jpg' style='margin:0; padding:0; '/>
@@ -54,7 +54,7 @@ class MainWindow(QMainWindow):
         self.q_ex_stat.setToolTip("""
         <table>
         <tr><td style='text-align:justify;'padding:0; margin:0;'>
-            <p style='margin:0; padding:0;'>Aumenta el valor de una estadisticas<br> a la vez en un porcentaje</p>
+            <p style='margin:0; padding:0;'>Aumenta el valor de una estadisticas<br> a la vez en un porcentaje. Ej:</p>
         </td></tr>
         <tr><td style='text-align:center; 'padding:0; margin:0;'>
             <img src='img/ej2.jpg' style='margin:0; padding:0;'/>
@@ -66,7 +66,7 @@ class MainWindow(QMainWindow):
         self.q_ex_tec.setToolTip("""
         <table>
         <tr><td style='text-align:justify;'padding:0; margin:0;'>
-            <p style='margin:0; padding:0;'>Aumenta la potencia de una<br> tecnica a la vez en un porcentaje</p>
+            <p style='margin:0; padding:0;'>Aumenta la potencia de una<br> tecnica a la vez en un porcentaje. Ej:</p>
         </td></tr>
         <tr><td style='text-align:center; 'padding:0; margin:0;'>
             <img src='img/ej3.jpg' style='margin:0; padding:0;'/>
@@ -78,7 +78,7 @@ class MainWindow(QMainWindow):
         self.q_ext_tec_todas.setToolTip("""
         <table>
         <tr><td style='text-align:justify;'padding:0; margin:0;'>
-            <p style='margin:0; padding:0;'>Aumenta la potencia de todas las<br> tecnicas a la vez en un porcentaje</p>
+            <p style='margin:0; padding:0;'>Aumenta la potencia de todas las<br> tecnicas a la vez en un porcentaje. Ej:</p>
         </td></tr>
         <tr><td style='text-align:center; 'padding:0; margin:0;'>
             <img src='img/ej4.jpg' style='margin:0; padding:0;'/>

@@ -38,19 +38,21 @@ def extractor(archivo):
 
 
     
-    if soup.find('a', href=re.compile(r'/global/es/players/\?low_ball=0')):
+    # Manejo de 'low_ball'
+    if soup.find('a', href=re.compile(r'/global/(es|en)/players/\?low_ball=0')):
         otros["volea"] = "Normal"
-    elif soup.find('a', href=re.compile(r'/global/es/players/\?low_ball=1250')):
+    elif soup.find('a', href=re.compile(r'/global/(es|en)/players/\?low_ball=1250')):
         otros["volea"] = "Bueno"
-    elif soup.find('a', href=re.compile(r'/global/es/players/\?low_ball=2500')):
+    elif soup.find('a', href=re.compile(r'/global/(es|en)/players/\?low_ball=2500')):
         otros["volea"] = "Muy Bueno"
 
-    if soup.find('a', href=re.compile(r'/global/es/players/\?high_ball=0')):
+    # Manejo de 'high_ball'
+    if soup.find('a', href=re.compile(r'/global/(es|en)/players/\?high_ball=0')):
         otros["cabeceo"] = "Normal"
-    elif soup.find('a', href=re.compile(r'/global/es/players/\?high_ball=1250')):
-        otros["cabeceo"] = "Normal"
-    elif soup.find('a', href=re.compile(r'/global/es/players/\?high_ball=2500')):
-        otros["cabeceo"] = "Normal"
+    elif soup.find('a', href=re.compile(r'/global/(es|en)/players/\?high_ball=1250')):
+        otros["cabeceo"] = "Bueno"
+    elif soup.find('a', href=re.compile(r'/global/(es|en)/players/\?high_ball=2500')):
+        otros["cabeceo"] = "Muy Bueno"
 
     diccionario = {"stats": stats, "tecnicas": tecnicas, "otros": otros}
     return diccionario
