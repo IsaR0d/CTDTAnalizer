@@ -16,7 +16,7 @@ def modificar_por_lb(diccionario_jugador):
     lb_config = diccionario_jugador['otros']['lb']
     if lb_config == 'Todo (Atacante)':
         stats_extra = ['regate', 'remate', 'pase', 'entrada', 'intercepcion']
-    elif lb_config == 'Todo (Defensor)':
+    elif lb_config == 'Todo (Defensa)':
         stats_extra = ['regate', 'pase', 'entrada', 'bloqueo', 'intercepcion']
     elif lb_config == 'Ataque':
         stats_extra = ['regate', 'remate', 'pase']
