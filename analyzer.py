@@ -17,7 +17,7 @@ def modificar_por_lb(diccionario_jugador):
     if lb_config == 'Todo (Atacante)':
         stats_extra = ['regate', 'remate', 'pase', 'entrada', 'intercepcion']
     elif lb_config == 'Todo (Defensor)':
-        stats_extra = ['regate', 'remate', 'pase', 'entrada', 'bloqueo']
+        stats_extra = ['regate', 'pase', 'entrada', 'bloqueo', 'intercepcion']
     elif lb_config == 'Ataque':
         stats_extra = ['regate', 'remate', 'pase']
     elif lb_config == 'Defensa':
@@ -54,7 +54,6 @@ def modificar_por_bb4(diccionario_jugador):
 def calcular_fuerza_tecnicas(diccionario_jugador):
     tecnicas_final = {}
     otros = diccionario_jugador['otros']
-    potencia_base = otros['potencia']
     
     for tecnica, valor in diccionario_jugador['tecnicas'].items():
         if tecnica == 'pared':
@@ -72,19 +71,19 @@ def calcular_fuerza_tecnicas(diccionario_jugador):
                 multiplicador_balones_aire = 12.5
 
         tecnicas_final[tecnica] = ((valor + multiplicador_balones_aire) *
-                                   (potencia_base + diccionario_jugador['extras'][tecnica] - 1))
-    tecnicas_final['pared'] = diccionario_jugador['tecnicas']['pared'] * (potencia_base + diccionario_jugador['extras']['pase'] - 1)
+                                   (diccionario_jugador['extras'][tecnica]))
+    tecnicas_final['pared'] = diccionario_jugador['tecnicas']['pared'] * (diccionario_jugador['extras']['pase'])
     tecnicas_final['bloqueoBajo'] = tecnicas_final['bloqueo']
     tecnicas_final['bloqueoAlto'] = tecnicas_final['bloqueo']
     if otros['volea'] == 'Muy Bueno':
-        tecnicas_final['bloqueoBajo'] = (diccionario_jugador['tecnicas']['bloqueo'] + 25) * (potencia_base + diccionario_jugador['extras']['bloqueo'] - 1)
+        tecnicas_final['bloqueoBajo'] = (diccionario_jugador['tecnicas']['bloqueo'] + 25) * (diccionario_jugador['extras']['bloqueo'])
     elif otros['volea'] == 'Bueno':
-        tecnicas_final['bloqueoBajo'] = (diccionario_jugador['tecnicas']['bloqueo'] + 12.5) * (potencia_base + diccionario_jugador['extras']['bloqueo'] - 1)
+        tecnicas_final['bloqueoBajo'] = (diccionario_jugador['tecnicas']['bloqueo'] + 12.5) * (diccionario_jugador['extras']['bloqueo'])
 
     if otros['cabeceo'] == 'Muy Bueno':
-        tecnicas_final['bloqueoAlto'] = (diccionario_jugador['tecnicas']['bloqueo'] + 25) * (potencia_base + diccionario_jugador['extras']['bloqueo'] - 1)
+        tecnicas_final['bloqueoAlto'] = (diccionario_jugador['tecnicas']['bloqueo'] + 25) * (diccionario_jugador['extras']['bloqueo'])
     elif otros['cabeceo'] == 'Bueno':
-        tecnicas_final['bloqueoAlto'] = (diccionario_jugador['tecnicas']['bloqueo'] + 12.5) * (potencia_base + diccionario_jugador['extras']['bloqueo'] - 1)
+        tecnicas_final['bloqueoAlto'] = (diccionario_jugador['tecnicas']['bloqueo'] + 12.5) * (diccionario_jugador['extras']['bloqueo'])
 
     return tecnicas_final
 

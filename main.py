@@ -1,10 +1,12 @@
 import sys
 from PyQt6.QtWidgets import *
 from PyQt6.uic import loadUi
-
-from PyQt6.QtCore import QThread, pyqtSignal, QStandardPaths
-from analyzer import analizar_jugador
-from dataExtractor import extractor
+from PyQt6.QtCore import QThread, pyqtSignal, QStandardPaths, Qt
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtCore import QByteArray
+from funcionalidades.analyzer import analizar_jugador
+from dataExtractor import extractor, extraer_imagen
+from mhtmlConverter import converter
 import math
 
 class HiloAnalisis(QThread):
@@ -25,8 +27,65 @@ class MainWindow(QMainWindow):
         loadUi('analisis.ui', self)
         self.show()
         self.resultado_analisis = None
+
         self.calcular_btn.clicked.connect(self.calcular)
+
         self.subir_btn.clicked.connect(self.subirJugador)
+
+        self.subir_imagen.clicked.connect(self.subirImagen)
+
+        self.reiniciar_btn.clicked.connect(self.reiniciar)
+
+        self.tutorial.setText('<a href="https://es.stackoverflow.com/">Tutorial</a>')
+        self.tutorial.setOpenExternalLinks(True)
+
+        self.q_ex_stat_todas.setToolTip("""
+        <table>
+        <tr><td style='text-align:justify;'padding:0; margin:0;'>
+            <p style='margin:0; padding:0;'>Aumenta el valor de todas las <br>estadisticas a la vez en un porcentaje</p>
+        </td></tr>
+        <tr><td style='text-align:center; 'padding:0; margin:0;'>
+            <img src='img/ej1.jpg' style='margin:0; padding:0; '/>
+        </td></tr>
+        </table>
+        """)
+        self.q_ex_stat_todas.setToolTipDuration(5000)
+
+        self.q_ex_stat.setToolTip("""
+        <table>
+        <tr><td style='text-align:justify;'padding:0; margin:0;'>
+            <p style='margin:0; padding:0;'>Aumenta el valor de una estadisticas<br> a la vez en un porcentaje</p>
+        </td></tr>
+        <tr><td style='text-align:center; 'padding:0; margin:0;'>
+            <img src='img/ej2.jpg' style='margin:0; padding:0;'/>
+        </td></tr>
+        </table>
+        """)
+        self.q_ex_stat.setToolTipDuration(5000)
+
+        self.q_ex_tec.setToolTip("""
+        <table>
+        <tr><td style='text-align:justify;'padding:0; margin:0;'>
+            <p style='margin:0; padding:0;'>Aumenta la potencia de una<br> tecnica a la vez en un porcentaje</p>
+        </td></tr>
+        <tr><td style='text-align:center; 'padding:0; margin:0;'>
+            <img src='img/ej3.jpg' style='margin:0; padding:0;'/>
+        </td></tr>
+        </table>
+        """)
+        self.q_ex_tec.setToolTipDuration(5000)
+
+        self.q_ext_tec_todas.setToolTip("""
+        <table>
+        <tr><td style='text-align:justify;'padding:0; margin:0;'>
+            <p style='margin:0; padding:0;'>Aumenta la potencia de todas las<br> tecnicas a la vez en un porcentaje</p>
+        </td></tr>
+        <tr><td style='text-align:center; 'padding:0; margin:0;'>
+            <img src='img/ej4.jpg' style='margin:0; padding:0;'/>
+        </td></tr>
+        </table>
+        """)
+        self.q_ext_tec_todas.setToolTipDuration(5000)
 
     def onTaskFinished(self, result):
         for key in ['remate', 'pase', 'regate', 'entrada', 'bloqueo', 'intercepcion']:
@@ -41,16 +100,84 @@ class MainWindow(QMainWindow):
         self.bbajo_total.setText(str(math.ceil(result['statsDuelo']['bloqueoBajo'])))
 
 
+
+    def reiniciar(self):
+        self.reg_st.setValue(0)
+        self.rem_st.setValue(0)
+        self.pas_st.setValue(0)
+        self.ent_st.setValue(0)
+        self.blo_st.setValue(0)
+        self.int_st.setValue(0)
+        self.rap_st.setValue(0)
+        self.pot_st.setValue(0)
+        self.tec_st.setValue(0)
+        self.reg_tc.setValue(0)
+        self.rem_tc.setValue(0)
+        self.pas_tc.setValue(0)
+        self.par_tc.setValue(0)
+        self.ent_tc.setValue(0)
+        self.blo_tc.setValue(0)
+        self.int_tc.setValue(0)
+        self.baj_tc.setValue(0)
+        self.alt_tc.setValue(0)
+        self.jug_img.clear()
+
+        for key in ['remate', 'pase', 'regate', 'entrada', 'bloqueo', 'intercepcion']:
+            getattr(self, f"{key[:3]}_visual").setText(str(0))
+            getattr(self, f"{key[:3]}_total").setText(str(0))
+        getattr(self, "par_visual").setText(str(0))    
+        getattr(self, "par_total").setText(str(0))    
+        self.cab_total.setText(str(0))
+        self.vol_total.setText(str(0))
+        self.balto_total.setText(str(0))
+        self.bbajo_total.setText(str(0))
+
     def subirJugador(self):
         options = (QFileDialog.Option.DontUseNativeDialog)
         initial_dir = QStandardPaths.writableLocation(
             QStandardPaths.StandardLocation.DownloadLocation
         )
-        file_types = "Archivos HTML (*.html)"
+        file_types = "Archivos MHTML (*.mhtml);;Archivos HTML (*.html)"
         file_name, _ = QFileDialog.getOpenFileName(self, "Open File", initial_dir, file_types, options=options)
         if file_name:
-            self.player = extractor(file_name)
-            self.actualizar_ui()
+            if file_name.endswith('.html'):
+                self.player = extractor(file_name)
+                self.actualizar_ui()
+            elif file_name.endswith('.mhtml'):
+                img = extraer_imagen(file_name)
+                if img:
+                    self.actualizar_imagen(img)
+                else:
+                    pass
+                archivo_html = converter(file_name)
+                self.player = extractor(archivo_html)
+                self.actualizar_ui()
+
+    def subirImagen(self):
+        options = (QFileDialog.Option.DontUseNativeDialog)
+        initial_dir = QStandardPaths.writableLocation(
+            QStandardPaths.StandardLocation.DownloadLocation
+        )
+        file_types = "Archivo JPG (*.jpg);;Archivo PNG (*.png);;Archivo GIF (*.gif)"
+        file_name, _ = QFileDialog.getOpenFileName(self, "Open File", initial_dir, file_types, options=options)
+        if file_name:
+            self.actualizar_imagen(file_name)
+
+
+    def actualizar_imagen(self, img):
+        
+        # Convertir _io.BytesIO a QByteArray
+        img.seek(0)  # Asegurarse de que el puntero esté al inicio
+        byte_array = QByteArray(img.read())
+
+        # Crear el QPixmap desde QByteArray
+        pixmap = QPixmap()
+        pixmap.loadFromData(byte_array)
+
+        # Escalar el QPixmap
+        scaled_pixmap = pixmap.scaled(161, pixmap.height(), Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+        self.jug_img.setPixmap(scaled_pixmap)
+
 
     def actualizar_ui(self):
         self.reg_st.setValue(self.player['stats']['regate'])
@@ -71,6 +198,8 @@ class MainWindow(QMainWindow):
         self.int_tc.setValue(self.player['tecnicas']['intercepcion'])
         self.baj_tc.setValue(self.player['tecnicas']['bajo'])
         self.alt_tc.setValue(self.player['tecnicas']['alto'])
+        self.cab_sel.setCurrentText(self.player['otros']['cabeceo'])
+        self.vol_sel.setCurrentText(self.player['otros']['volea'])
 
 
 
@@ -126,7 +255,6 @@ class MainWindow(QMainWindow):
             'ts': 1 + self.ts.value() / 100, 
             'bond': 1 + self.bond.value() / 100, 
             'parametros': 1 + self.parametros.value() / 100, 
-            'potencia': 1 + self.potencia.value() / 100, 
             'cabeceo': self.cab_sel.currentText(), 
             'volea': self.vol_sel.currentText(), 
             'formacion': self.for_sel.currentText(), 
